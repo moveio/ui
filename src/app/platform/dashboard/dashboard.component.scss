@@ -3,10 +3,10 @@
 .dashboard-container {
   @include component-basis;
 
-  .pipelines-container {
+  .list-container {
     width: 500px;
 
-    .pipeline {
+    .list-item {
       height: 60px;
       width: 100%;
       padding: 10px;
@@ -22,12 +22,12 @@
         border-bottom: 1px solid gray;
       }
 
-      .pipeline-name {
+      .item-name {
         font-size: 16px;
         font-weight: bold;
       }
 
-      .pipeline-description {
+      .item-description {
         font-size: 14px;
         font-weight: 300;
         color: gray;

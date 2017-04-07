@@ -1,3 +1,23 @@
-<p>
-  pipeline-detail works!
-</p>
+<div class="pipeline-detail-container">
+  <div *ngIf="selectedPipeline">
+    <div> {{selectedPipeline.name}}</div>
+    <div> {{selectedPipeline.description}}</div>
+  </div>
+
+  <div class="actions-toolbar" *ngIf="gestures" fxLayout="row">
+    <div *ngFor="let gesture of gestures" (click)="startAdding(gesture)" class="gesture" fxLayoutAlign="center center">
+      <span>{{gesture.name}}</span>
+    </div>
+  </div>
+
+  <div class="delete-button" (click)="toggleRemoving()" fxLayoutAlign="center center">
+    <span>
+      {{mode === 'REMOVE' ? 'CANCEL REMOVING': 'REMOVE ITEMS'}}
+    </span>
+
+  </div>
+
+  <svg class="graphic-editor">
+
+  </svg>
+</div>

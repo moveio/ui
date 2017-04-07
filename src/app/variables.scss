@@ -1,0 +1,14 @@
+
+$primary-color: #6699cc;
+$primary-contrast-color: white;
+
+$warn-color: #b00b13;
+
+$toolbar-height: 60px;
+
+@mixin component-basis {
+  height: calc(100vh - #{$toolbar-height});
+  width: 100vw;
+  position: relative;
+  top: $toolbar-height;
+}

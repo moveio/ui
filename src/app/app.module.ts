@@ -8,6 +8,7 @@ import { LandingComponent } from './landing/landing.component';
 import { PlatformModule } from './platform/platform.module';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { routes } from './app.routes';
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    PlatformModule
+    PlatformModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

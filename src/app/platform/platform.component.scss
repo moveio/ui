@@ -1,0 +1,30 @@
+@import '../variables';
+
+.toolbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: $primary-color;
+  color: $primary-contrast-color;
+  font-size: 16px;
+  height: 60px;
+  width: 100vw;
+  padding: 10px 20px;
+
+  .name-label {
+    margin-left: 10px;
+    margin-right: 20px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .icon-image {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+
+    &:active {
+      opacity: 0.5;
+    }
+  }
+}

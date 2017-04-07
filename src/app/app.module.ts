@@ -10,6 +10,8 @@ import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { AuthService } from './auth/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     PlatformModule,
     FlexLayoutModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

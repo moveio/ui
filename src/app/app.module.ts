@@ -9,6 +9,8 @@ import { PlatformModule } from './platform/platform.module';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 
+import { AuthService } from './auth/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +23,7 @@ import { routes } from './app.routes';
     RouterModule.forRoot(routes),
     PlatformModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {

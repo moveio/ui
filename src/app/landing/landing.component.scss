@@ -1,0 +1,24 @@
+@import '../variables';
+
+.landing-container {
+  width: 100vw;
+  height: 100vh;
+
+  .login-button {
+    width: 300px;
+    height: 60px;
+    background-color: $primary-color;
+    color: $primary-contrast-color;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    border: none;
+    cursor: pointer;
+    user-select: none;
+
+    &:active {
+      outline: none;
+      background-color: darken($primary-color, 15%);
+    }
+  }
+}

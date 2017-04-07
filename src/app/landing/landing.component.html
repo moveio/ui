@@ -1,6 +1,3 @@
-<p>
-  landing works!
-</p>
-
-<button (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
-<button (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
+<div class="landing-container" fxLayoutAlign="center center">
+  <button (click)="auth.login()" class="login-button" *ngIf="!auth.authenticated()">LOG IN</button>
+</div>

@@ -1,3 +1,22 @@
-<div class="dashboard-container">
-  DASHBOARD WORKS
+<div class="dashboard-container" fxLayoutAlign="space-around">
+  <div class="pipelines-container">
+    <div class="title">
+      Pipelines
+    </div>
+    <div class="pipeline" *ngFor="let pipeline of pipelines" fxLayoutAlign="space-between"
+         (click)="redirectToPipeline(pipeline.id)">
+      <div>
+        <div class="pipeline-name">{{pipeline.name}}</div>
+        <div class="pipeline-description">{{pipeline.description}}</div>
+      </div>
+      <div fxLayoutAlign="center center" class="arrow-right">
+        <span>></span>
+      </div>
+    </div>
+  </div>
+  <div class="gestures">
+    <div class="title">
+      Gestures
+    </div>
+  </div>
 </div>

@@ -16,4 +16,8 @@ export class PlatformComponent {
     this.router.navigateByUrl(`landing`);
   }
 
+  toolbarRedirect(id: string): void {
+    this.router.navigateByUrl('/platform/' + id);
+  }
+
 }

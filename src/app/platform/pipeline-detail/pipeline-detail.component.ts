@@ -84,11 +84,29 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
 
       }
     });
+
+    setTimeout(() => {
+      this.initializeEditor();
+    }, 500);
   }
 
   ngOnDestroy(): void {
     for (const sub of this.subscriptions) {
       sub.unsubscribe();
+    }
+  }
+
+  initializeEditor(): void {
+    if (this.selectedPipeline) {
+      if (this.selectedPipeline.gesture_id && this.selectedPipeline.hook_id) {
+        const gesture = this.gestures.find(item => item.id === this.selectedPipeline.gesture_id);
+        this.newElementType = 'gesture';
+        const firstRect = this.addElement(gesture, { x: 50, y: 60 });
+        const hook = this.hooks.find(item => item.id === this.selectedPipeline.hook_id);
+        this.newElementType = 'hook';
+        const secondRect = this.addElement(hook, { x: 300, y: 40 });
+        this.drawLine(firstRect, secondRect);
+      }
     }
   }
 
@@ -113,14 +131,13 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
   mouseDownHandler(rect: any, elementID: string, textID: string) {
     switch (this.mode) {
       case REMOVE :
-        console.log(elementID, textID);
         d3.select('#' + elementID).remove();
         d3.select('#' + textID).remove();
         d3.selectAll('.' + elementID).remove();
         break;
 
       case DRAW_LINE:
-        this.drawLine(this.lineGestureRect, rect, elementID);
+        this.drawLine(this.lineGestureRect, rect);
         this.mode = NONE;
         break;
 
@@ -131,7 +148,7 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
     }
   }
 
-  drawLine(firstElement: any, secondElement: any, elementID: string) {
+  drawLine(firstElement: any, secondElement: any) {
     this.svg.append('line')
       .attr('stroke-width', 4)
       .attr('x1', firstElement.attr('x'))
@@ -139,18 +156,21 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
       .attr('x2', secondElement.attr('x'))
       .attr('y2', secondElement.attr('y'))
       .attr('stroke', 'black')
-      .attr('class', this.lineGestureRect.attr('id') + ' ' + elementID);
+      .attr('class', firstElement.attr('id') + ' ' + secondElement.attr('id'));
   }
 
-  addElement(element: Gesture | Hook): void {
+  addElement(element: Gesture | Hook, position?: { x: number, y: number }): any {
     const color = this.newElementType === 'gesture' ? '#6699cc' : '#33bb25';
     const elementID = 'element_' + this.elementOrder.toString();
     const textID = 'text_' + this.elementOrder.toString();
     this.elementOrder += 1;
 
+    const positionX = position ? position.x : this.mouse[0];
+    const positionY = position ? position.y : this.mouse[1];
+
     const rect = this.svg.append('rect')
-      .attr('x', this.mouse[0])
-      .attr('y', this.mouse[1])
+      .attr('x', positionX)
+      .attr('y', positionY)
       .attr('width', 150)
       .attr('height', 50)
       .attr('fill', color)
@@ -164,13 +184,15 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
     this.svg.append('text')
       .text(element.name)
       .attr('fill', 'white')
-      .attr('x', (+this.mouse[0] + 10))
-      .attr('y', (+this.mouse[1] + 30))
+      .attr('x', (+positionX + 10))
+      .attr('y', (+positionY + 30))
       .attr('id', textID)
       .style('cursor', 'pointer')
       .on('mousedown', () => {
         this.mouseDownHandler(rect, elementID, textID);
       });
+
+    return rect;
   }
 
   toggleHookAdding(): void {

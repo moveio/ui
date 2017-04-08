@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MOCK_GESTURES } from '../dashboard/dashboard.component';
 import { Gesture } from '../../models/gesture.model';
 import { Store } from '@ngrx/store';
-import { LOAD_GESTURES } from '../../reducers/gesture.reducer';
+import { DELETE_GESTURE, LOAD_GESTURES } from '../../reducers/gesture.reducer';
 
 @Component({
   selector: 'app-gesture-detail',
@@ -18,7 +18,7 @@ export class GestureDetailComponent implements OnDestroy {
   gestures: Gesture [] = MOCK_GESTURES;
   selectedGesture: Gesture;
 
-  constructor(private activeRoute: ActivatedRoute, private store: Store<Gesture>) {
+  constructor(private activeRoute: ActivatedRoute, private store: Store<Gesture>, private router: Router) {
     this.subscriptions.push(activeRoute.params.subscribe(params => {
       this.gestureID = params['id'];
       this.selectedGesture = this.gestures.find(item => item.id === this.gestureID);
@@ -38,6 +38,11 @@ export class GestureDetailComponent implements OnDestroy {
     this.subscriptions.forEach(sub => {
       sub.unsubscribe();
     });
+  }
+
+  deleteGesture(): void {
+    this.store.dispatch({ type: DELETE_GESTURE, payload: this.gestureID });
+    this.router.navigateByUrl('/platform/dashboard');
   }
 
 

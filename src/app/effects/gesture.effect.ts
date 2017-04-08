@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-import { LOAD_GESTURES, AFTER_LOAD_GESTURES, CREATE_GESTURE, AFTER_CREATE_GESTURE } from '../reducers/gesture.reducer';
+import {
+  AFTER_CREATE_GESTURE, AFTER_LOAD_GESTURES, CREATE_GESTURE, DELETE_GESTURE,
+  LOAD_GESTURES, AFTER_DELETE_GESTURE,
+} from '../reducers/gesture.reducer';
 import { Http } from '@angular/http';
 import { environment } from '../../environments/environment';
 
@@ -26,6 +28,14 @@ export class GesturesEffect {
     .switchMap((action) => this.http.post(environment.apiUrl + GESTURES_ENDPOINT, action.payload)
       .map(res => ({
         type: AFTER_CREATE_GESTURE,
+        payload: res.json(),
+      })));
+
+  @Effect() deleteGesture: Observable<Action> = this.actions
+    .ofType(DELETE_GESTURE)
+    .switchMap((action) => this.http.delete(environment.apiUrl + GESTURES_ENDPOINT + '/' + action.payload)
+      .map(res => ({
+        type: AFTER_DELETE_GESTURE,
         payload: res.json(),
       })));
 

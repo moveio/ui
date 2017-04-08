@@ -12,4 +12,18 @@
     font-size: 14px;
     margin-top: 14px;
   }
+
+  .delete-button {
+    background-color: $warn-color;
+    color: $primary-contrast-color;
+    padding: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    user-select: none;
+    width: 150px;
+
+    &:active {
+      background-color: darken($warn-color, 15%);
+    }
+  }
 }

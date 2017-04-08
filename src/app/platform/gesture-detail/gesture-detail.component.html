@@ -5,4 +5,7 @@
   <div *ngIf="selectedGesture" class="description">
     {{selectedGesture.description}}
   </div>
+  <div class="delete-button" (click)="deleteGesture()" fxLayoutAlign="center center">
+    <span>Delete Gesture</span>
+  </div>
 </div>

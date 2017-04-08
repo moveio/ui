@@ -16,6 +16,8 @@ import { AuthService } from './auth/auth.service';
 
 import { gesturesReducer } from './reducers';
 import { GesturesEffect } from './effects';
+import { hooksReducer } from 'app/reducers/hooks.reducer';
+import { HooksEffect } from './effects/hooks.effect';
 
 @NgModule({
   declarations: [
@@ -31,8 +33,10 @@ import { GesturesEffect } from './effects';
     FlexLayoutModule,
     StoreModule.provideStore({
       gestures: gesturesReducer,
+      hooks: hooksReducer,
     }),
     EffectsModule.runAfterBootstrap(GesturesEffect),
+    EffectsModule.runAfterBootstrap(HooksEffect),
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

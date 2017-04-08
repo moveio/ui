@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { MOCK_GESTURES, MOCK_PIPELINES } from '../dashboard/dashboard.component';
+import { MOCK_PIPELINES } from '../dashboard/dashboard.component';
 import * as d3 from 'd3';
 import { Gesture } from '../../models/gesture.model';
+import { Store } from '@ngrx/store';
+import { LOAD_GESTURES } from '../../reducers/gesture.reducer';
 
 const ADD_GESTURE = 'ADD_GESTURE';
 const REMOVE = 'REMOVE';
@@ -20,7 +22,7 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
   subscriptions: Subscription[] = [];
   pipelineID: string;
 
-  gestures = MOCK_GESTURES;
+  gestures: Gesture[];
   pipelines = MOCK_PIPELINES;
   selectedPipeline: any;
 
@@ -33,11 +35,17 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
   svg: any;
   mouse: any;
 
-  constructor(private activeRoute: ActivatedRoute) {
+  constructor(private activeRoute: ActivatedRoute, store: Store<any>) {
+
+    store.dispatch({ type: LOAD_GESTURES });
 
     this.subscriptions.push(activeRoute.params.subscribe((params) => {
       this.pipelineID = params['id'];
       this.selectedPipeline = this.pipelines.find(item => item.id === this.pipelineID);
+    }));
+
+    this.subscriptions.push(store.select('gestures').subscribe((data: any) => {
+      this.gestures = data;
     }));
   }
 

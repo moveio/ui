@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { MOCK_GESTURES, MOCK_PIPELINES } from '../dashboard/dashboard.component';
 import * as d3 from 'd3';
-import { GestureModel } from '../../models/gesture.model';
+import { Gesture } from '../../models/gesture.model';
 
 const ADD_GESTURE = 'ADD_GESTURE';
 const REMOVE = 'REMOVE';
@@ -25,7 +25,7 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
   selectedPipeline: any;
 
   mode: 'ADD_GESTURE' | 'DRAW_LINE' | 'REMOVE' | 'NONE' = 'NONE';
-  newGesture: GestureModel;
+  newGesture: Gesture;
 
   lineGestureRect: any;
 
@@ -61,7 +61,7 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
     }
   }
 
-  startAdding(gesture: GestureModel): void {
+  startAdding(gesture: Gesture): void {
     this.newGesture = gesture;
     this.mode = ADD_GESTURE;
   }
@@ -71,7 +71,7 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
   }
 
 
-  addGesture(gesture: GestureModel): void {
+  addGesture(gesture: Gesture): void {
 
     const gestureID = 'gesture_' + this.gestureOrder.toString();
     const textID = 'text_' + this.gestureOrder.toString();

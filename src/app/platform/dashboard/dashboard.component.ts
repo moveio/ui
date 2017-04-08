@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CREATE_GESTURE, LOAD_GESTURES } from '../../reducers';
+import { Resource, Gesture } from '../../models';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 export const MOCK_PIPELINES = [
   {
@@ -50,9 +54,13 @@ export const MOCK_GESTURES = [
 export class DashboardComponent {
 
   pipelines = MOCK_PIPELINES;
-  gestures = MOCK_GESTURES;
 
-  constructor(private router: Router) {
+  gestures: Observable<Resource<Gesture>>;
+
+  constructor(private router: Router, private store: Store<any>) {
+    this.gestures = store.select('gestures');
+
+    this.store.dispatch({ type: LOAD_GESTURES });
   }
 
   redirectToPipeline(id: string) {

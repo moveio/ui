@@ -6,7 +6,7 @@ import * as d3 from 'd3';
 import { Gesture } from '../../models/gesture.model';
 import { Store } from '@ngrx/store';
 import { LOAD_GESTURES } from '../../reducers/gesture.reducer';
-import { LOAD_HOOKS } from 'app/reducers/hooks.reducer';
+import { CREATE_HOOK, LOAD_HOOKS } from 'app/reducers/hooks.reducer';
 import { Hook } from '../../models/hook.model';
 
 const ADD_ELEMENT = 'ADD_ELEMENT';
@@ -29,17 +29,20 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
   pipelines = MOCK_PIPELINES;
   selectedPipeline: any;
 
+  newHook: Hook = this.createNewHook();
+
   mode: 'ADD_ELEMENT' | 'DRAW_LINE' | 'REMOVE' | 'NONE' = 'NONE';
   newElement: Gesture | Hook;
   newElementType: string;
 
   lineGestureRect: any;
+  hookAdding = false;
 
   elementOrder = 0;
   svg: any;
   mouse: any;
 
-  constructor(private activeRoute: ActivatedRoute, store: Store<any>) {
+  constructor(private activeRoute: ActivatedRoute, private store: Store<any>) {
 
     store.dispatch({ type: LOAD_GESTURES });
     store.dispatch({ type: LOAD_HOOKS });
@@ -76,6 +79,14 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
     for (const sub of this.subscriptions) {
       sub.unsubscribe();
     }
+  }
+
+  createNewHook(): Hook {
+    return {
+      name: '',
+      address: '',
+      message: '',
+    };
   }
 
   startAdding(element: Gesture | Hook, type: 'gesture' | 'hook' = 'gesture'): void {
@@ -148,5 +159,14 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
       });
   }
 
+  toggleHookAdding(): void {
+    this.hookAdding = !this.hookAdding;
+  }
+
+  confirmNewHook(): void {
+    this.store.dispatch({ type: CREATE_HOOK, payload: this.newHook });
+    this.newHook = this.createNewHook();
+    this.toggleHookAdding();
+  }
 
 }

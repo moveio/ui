@@ -1,6 +1,7 @@
 export interface Hook {
-  id: string;
+  id?: string;
   message?: string;
   name?: string;
   description?: string;
+  address?: string;
 }

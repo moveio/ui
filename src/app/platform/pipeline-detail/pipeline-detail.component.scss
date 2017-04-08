@@ -53,6 +53,42 @@
   }
 }
 
+.actions-toolbar {
+  .add-hook-button {
+    background-color: $primary-color;
+    color: $primary-contrast-color;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 2px;
+
+    &:active {
+      background-color: darken($primary-color, 15%);
+    }
+  }
+
+  .hook-input {
+    padding: 7px 10px;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  .confirm-hook-button {
+    border: 2px solid $primary-color;
+    color: $primary-color;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 2px;
+
+    &:active {
+      outline: none;
+    }
+  }
+}
+
 .random {
   opacity: 0.9;
 }

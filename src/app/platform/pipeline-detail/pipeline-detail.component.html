@@ -16,14 +16,21 @@
     </div>
   </div>
 
-  <div class="delete-button" (click)="toggleRemoving()" fxLayoutAlign="center center">
-    <span>
-      {{mode === 'REMOVE' ? 'CANCEL REMOVING': 'REMOVE ITEMS'}}
-    </span>
-
+  <div class="actions-toolbar" fxLayour="row" fxLayoutAlign="start center">
+    <div class="delete-button" (click)="toggleRemoving()" fxLayoutAlign="center center">
+      <span>{{mode === 'REMOVE' ? 'CANCEL REMOVING': 'REMOVE ITEMS'}}</span>
+    </div>
+    <div (click)="toggleHookAdding()" fxLayoutAlign="center center" class="add-hook-button">
+      <span>{{hookAdding? 'CANCEL': 'ADD HOOK'}}</span>
+    </div>
+    <div *ngIf="hookAdding" fxLayout="row">
+      <input type="text" [(ngModel)]="newHook.name" placeholder="Hook name" class="hook-input">
+      <input type="text" [(ngModel)]="newHook.address" placeholder="Target address" class="hook-input">
+      <input type="text" [(ngModel)]="newHook.message" placeholder="Message" class="hook-input">
+      <div class="confirm-hook-button" (click)="confirmNewHook()" fxLayoutAlign="center center">CONFIRM</div>
+    </div>
   </div>
 
-  <svg class="graphic-editor">
 
-  </svg>
+  <svg class="graphic-editor"></svg>
 </div>

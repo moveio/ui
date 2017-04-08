@@ -20,7 +20,9 @@ export class GestureDetailComponent implements OnDestroy {
   constructor(private activeRoute: ActivatedRoute, private store: Store<Gesture>, private router: Router) {
     this.subscriptions.push(activeRoute.params.subscribe(params => {
       this.gestureID = params['id'];
-      this.selectedGesture = this.gestures.find(item => item.id === this.gestureID);
+      if (this.gestures) {
+        this.selectedGesture = this.gestures.find(item => item.id === this.gestureID);
+      }
     }));
 
     this.subscriptions.push(store.select('gestures').subscribe((data: Gesture[]) => {

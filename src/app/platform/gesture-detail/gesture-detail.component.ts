@@ -1,15 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { MOCK_GESTURES } from '../dashboard/dashboard.component';
+import { Gesture } from '../../models/gesture.model';
+import { Store } from '@ngrx/store';
+import { LOAD_GESTURES } from '../../reducers/gesture.reducer';
 
 @Component({
   selector: 'app-gesture-detail',
   templateUrl: './gesture-detail.component.html',
-  styleUrls: ['./gesture-detail.component.css']
+  styleUrls: ['./gesture-detail.component.scss'],
 })
-export class GestureDetailComponent implements OnInit {
+export class GestureDetailComponent implements OnDestroy {
 
-  constructor() { }
+  subscriptions: Subscription [] = [];
+  gestureID: string;
+  gestures: Gesture [] = MOCK_GESTURES;
+  selectedGesture: Gesture;
 
-  ngOnInit() {
+  constructor(private activeRoute: ActivatedRoute, private store: Store<Gesture>) {
+    this.subscriptions.push(activeRoute.params.subscribe(params => {
+      this.gestureID = params['id'];
+      this.selectedGesture = this.gestures.find(item => item.id === this.gestureID);
+    }));
+
+    this.subscriptions.push(store.select('gestures').subscribe((data: Gesture[]) => {
+      this.gestures = data;
+      if (this.gestureID) {
+        this.selectedGesture = this.gestures.find(item => item.id === this.gestureID);
+      }
+    }));
+
+    this.store.dispatch({ type: LOAD_GESTURES });
   }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => {
+      sub.unsubscribe();
+    });
+  }
+
 
 }

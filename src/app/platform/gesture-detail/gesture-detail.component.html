@@ -1,3 +1,8 @@
-<p>
-  gesture-detail works!
-</p>
+<div class="gesture-detail-container">
+  <div *ngIf="selectedGesture" class="title">
+    {{selectedGesture.name}}
+  </div>
+  <div *ngIf="selectedGesture" class="description">
+    {{selectedGesture.description}}
+  </div>
+</div>

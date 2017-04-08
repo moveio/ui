@@ -19,7 +19,7 @@
       Gestures
     </div>
     <div class="list-item" *ngFor="let gesture of gestures | async" fxLayoutAlign="space-between"
-         (click)="redirectToGesture(gesture.id)">
+         (click)="redirectToGesture (gesture.id)">
       <div>
         <div class="item-name">{{gesture.name}}</div>
         <div class="item-description">{{gesture.description}}</div>

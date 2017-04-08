@@ -1,0 +1,15 @@
+@import '../../variables';
+
+.gesture-detail-container {
+  @include component-basis;
+
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .description {
+    font-size: 14px;
+    margin-top: 14px;
+  }
+}

@@ -18,6 +18,8 @@ import { gesturesReducer } from './reducers';
 import { GesturesEffect } from './effects';
 import { hooksReducer } from 'app/reducers/hooks.reducer';
 import { HooksEffect } from './effects/hooks.effect';
+import { pipelineReducer } from './reducers/pipeline.reducer';
+import { PipelinesEffect } from './effects/pipeline.effect';
 
 @NgModule({
   declarations: [
@@ -34,9 +36,11 @@ import { HooksEffect } from './effects/hooks.effect';
     StoreModule.provideStore({
       gestures: gesturesReducer,
       hooks: hooksReducer,
+      pipelines: pipelineReducer,
     }),
     EffectsModule.runAfterBootstrap(GesturesEffect),
     EffectsModule.runAfterBootstrap(HooksEffect),
+    EffectsModule.runAfterBootstrap(PipelinesEffect),
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

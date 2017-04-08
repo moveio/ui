@@ -15,6 +15,16 @@
         </div>
       </div>
     </div>
+    <div class="add-item-container" [ngClass]="{'expanded': pipelineAdding}">
+      <div class="add-item-button" fxLayoutAlign="center center" (click)="toggleAddingPipeline()">
+        <span>{{pipelineAdding? 'CANCEL': '+ ADD PIPELINE'}}</span>
+      </div>
+      <div class="add-item-content" fxLayout="column">
+        <input type="text" placeholder="Pipeline name" [(ngModel)]="newPipeline.name">
+        <input type="text" placeholder="Pipeline description" [(ngModel)]="newPipeline.description">
+        <div class="add-item" (click)="addPipeline()" fxLayoutAlign="center center"><span>ADD</span></div>
+      </div>
+    </div>
   </div>
 
   <div class="list-container">
@@ -44,7 +54,7 @@
           <option value="" disabled selected>Select your option</option>
           <option *ngFor="let option of gestureTypes">{{option}}</option>
         </select>
-        <div class="add-item" (click)="addItem()" fxLayoutAlign="center center"><span>ADD</span></div>
+        <div class="add-item" (click)="addGesture()" fxLayoutAlign="center center"><span>ADD</span></div>
       </div>
     </div>
   </div>

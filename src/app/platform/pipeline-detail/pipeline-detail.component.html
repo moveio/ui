@@ -1,7 +1,7 @@
 <div class="pipeline-detail-container">
   <div *ngIf="selectedPipeline">
-    <div> {{selectedPipeline.name}}</div>
-    <div> {{selectedPipeline.description}}</div>
+    <div class="title">{{selectedPipeline.name}}</div>
+    <div class="subtitle">{{selectedPipeline.description}}</div>
   </div>
 
   <div class="actions-toolbar" *ngIf="gestures" fxLayout="row">

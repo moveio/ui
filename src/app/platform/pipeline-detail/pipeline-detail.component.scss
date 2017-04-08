@@ -2,6 +2,12 @@
 
 .pipeline-detail-container {
   @include component-basis;
+
+  .title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 }
 
 .graphic-editor {

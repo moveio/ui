@@ -1,66 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { LOAD_GESTURES } from '../../reducers';
 import { Gesture, Resource } from '../../models';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { CREATE_GESTURE } from '../../reducers/gesture.reducer';
-
-export const MOCK_PIPELINES = [
-  {
-    id: 'dsd5a5s3d5as5da1sd454as',
-    name: 'Pipeline1',
-    description: 'Lorem ipsum...',
-  },
-  {
-    id: 'dsd5a5s3d5a89s31sd454as',
-    name: 'Pipeline2',
-    description: 'Random description',
-  },
-  {
-    id: 'dsd5a5s3d5a89s31yt854as',
-    name: 'Pipeline3',
-    description: 'Random description asdfa',
-  },
-  {
-    id: 'dsd3f3f3d5a89s31sd454as',
-    name: 'Pipeline4',
-    description: 'A tiny little bit longer description just to ensure text wrapping',
-  },
-];
-
-export const MOCK_GESTURES = [
-  {
-    id: 'dsd5a5s3d5as5da1asd84ass',
-    name: 'Gesture1',
-    description: 'Lorem ipsum...',
-  },
-  {
-    id: 'dsd5a5dasd4asd31sd454as',
-    name: 'Gesture2',
-    description: 'Random description',
-  },
-  {
-    id: 'dsd5a5s3d5a89s31ydsa84d',
-    name: 'Gesture3',
-    description: 'Random description asdfa',
-  },
-];
+import { Pipeline } from '../../models/pipeline.model';
+import { Subscription } from 'rxjs/Subscription';
+import { CREATE_PIPELINE, LOAD_PIPELINES } from '../../reducers/pipeline.reducer';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnDestroy {
 
-  pipelines = MOCK_PIPELINES;
+  pipelines: Pipeline[];
 
   gestures: Observable<Resource<Gesture>>;
 
   gestureAdding = false;
+  pipelineAdding = false;
 
   newGesture: Gesture = this.createNewGesture();
+  newPipeline: Pipeline = this.createNewPipeline();
+
+  subscriptions: Subscription[] = [];
 
   gestureTypes: string[] = [
     'left',
@@ -69,9 +35,18 @@ export class DashboardComponent {
 
 
   constructor(private router: Router, private store: Store<any>) {
+    this.store.dispatch({ type: LOAD_GESTURES });
+    this.store.dispatch({ type: LOAD_PIPELINES });
+
     this.gestures = store.select('gestures');
 
-    this.store.dispatch({ type: LOAD_GESTURES });
+    this.subscriptions.push(this.store.select('pipelines').subscribe((data: any) => {
+      this.pipelines = data;
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   createNewGesture(): Gesture {
@@ -79,6 +54,13 @@ export class DashboardComponent {
       name: '',
       description: '',
       meta: '',
+    };
+  }
+
+  createNewPipeline(): Pipeline {
+    return {
+      name: '',
+      description: '',
     };
   }
 
@@ -94,7 +76,17 @@ export class DashboardComponent {
     this.gestureAdding = !this.gestureAdding;
   }
 
-  addItem(): void {
+  toggleAddingPipeline(): void {
+    this.pipelineAdding = !this.pipelineAdding;
+  }
+
+  addPipeline(): void {
+    this.store.dispatch({ type: CREATE_PIPELINE, payload: this.newPipeline });
+    this.newPipeline = this.createNewPipeline();
+    this.toggleAddingPipeline();
+  }
+
+  addGesture(): void {
     this.store.dispatch({ type: CREATE_GESTURE, payload: this.newGesture });
     this.newGesture = this.createNewGesture();
     this.toggleAddingGesture();

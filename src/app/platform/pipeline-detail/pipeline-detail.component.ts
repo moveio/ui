@@ -1,13 +1,14 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { MOCK_PIPELINES } from '../dashboard/dashboard.component';
 import * as d3 from 'd3';
 import { Gesture } from '../../models/gesture.model';
 import { Store } from '@ngrx/store';
 import { LOAD_GESTURES } from '../../reducers/gesture.reducer';
 import { CREATE_HOOK, LOAD_HOOKS } from 'app/reducers/hooks.reducer';
 import { Hook } from '../../models/hook.model';
+import { Pipeline } from '../../models/pipeline.model';
+import { LOAD_PIPELINES } from '../../reducers/pipeline.reducer';
 
 const ADD_ELEMENT = 'ADD_ELEMENT';
 const REMOVE = 'REMOVE';
@@ -26,7 +27,7 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
 
   gestures: Gesture[];
   hooks: Hook[];
-  pipelines = MOCK_PIPELINES;
+  pipelines: Pipeline[];
   selectedPipeline: any;
 
   newHook: Hook = this.createNewHook();
@@ -46,10 +47,20 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
 
     store.dispatch({ type: LOAD_GESTURES });
     store.dispatch({ type: LOAD_HOOKS });
+    store.dispatch({ type: LOAD_PIPELINES });
 
     this.subscriptions.push(activeRoute.params.subscribe((params) => {
       this.pipelineID = params['id'];
-      this.selectedPipeline = this.pipelines.find(item => item.id === this.pipelineID);
+      if (this.pipelines) {
+        this.selectedPipeline = this.pipelines.find(item => item.id === this.pipelineID);
+      }
+    }));
+
+    this.subscriptions.push(store.select('pipelines').subscribe((data: any) => {
+      this.pipelines = data;
+      if (this.pipelineID) {
+        this.selectedPipeline = this.pipelines.find(item => item.id === this.pipelineID);
+      }
     }));
 
     this.subscriptions.push(store.select('gestures').subscribe((data: any) => {

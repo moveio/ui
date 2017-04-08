@@ -1,7 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MOCK_GESTURES } from '../dashboard/dashboard.component';
 import { Gesture } from '../../models/gesture.model';
 import { Store } from '@ngrx/store';
 import { DELETE_GESTURE, LOAD_GESTURES } from '../../reducers/gesture.reducer';
@@ -15,7 +14,7 @@ export class GestureDetailComponent implements OnDestroy {
 
   subscriptions: Subscription [] = [];
   gestureID: string;
-  gestures: Gesture [] = MOCK_GESTURES;
+  gestures: Gesture [];
   selectedGesture: Gesture;
 
   constructor(private activeRoute: ActivatedRoute, private store: Store<Gesture>, private router: Router) {

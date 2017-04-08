@@ -1,4 +1,4 @@
-export interface GestureModel {
+export interface Gesture   {
   id: string;
   meta?: string;
   name?: string;

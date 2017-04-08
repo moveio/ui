@@ -1,6 +1,6 @@
-export interface HookModel {
+export interface Hook {
   id: string;
-  format?: string;
+  message?: string;
   name?: string;
   description?: string;
 }

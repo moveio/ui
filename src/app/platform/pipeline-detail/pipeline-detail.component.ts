@@ -120,15 +120,7 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
         break;
 
       case DRAW_LINE:
-
-        this.svg.append('line')
-          .attr('stroke-width', 4)
-          .attr('x1', this.lineGestureRect.attr('x'))
-          .attr('y1', this.lineGestureRect.attr('y'))
-          .attr('x2', rect.attr('x'))
-          .attr('y2', rect.attr('y'))
-          .attr('stroke', 'black')
-          .attr('class', this.lineGestureRect.attr('id') + ' ' + elementID);
+        this.drawLine(this.lineGestureRect, rect, elementID);
         this.mode = NONE;
         break;
 
@@ -137,6 +129,17 @@ export class PipelineDetailComponent implements OnDestroy, AfterViewInit {
         this.lineGestureRect = rect;
         break;
     }
+  }
+
+  drawLine(firstElement: any, secondElement: any, elementID: string) {
+    this.svg.append('line')
+      .attr('stroke-width', 4)
+      .attr('x1', firstElement.attr('x'))
+      .attr('y1', firstElement.attr('y'))
+      .attr('x2', secondElement.attr('x'))
+      .attr('y2', secondElement.attr('y'))
+      .attr('stroke', 'black')
+      .attr('class', this.lineGestureRect.attr('id') + ' ' + elementID);
   }
 
   addElement(element: Gesture | Hook): void {

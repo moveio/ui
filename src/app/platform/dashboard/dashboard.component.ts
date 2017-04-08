@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CREATE_GESTURE, LOAD_GESTURES } from '../../reducers';
-import { Resource, Gesture } from '../../models';
+import { LOAD_GESTURES } from '../../reducers';
+import { Gesture, Resource } from '../../models';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { CREATE_GESTURE } from '../../reducers/gesture.reducer';
 
 export const MOCK_PIPELINES = [
   {
@@ -57,10 +58,28 @@ export class DashboardComponent {
 
   gestures: Observable<Resource<Gesture>>;
 
+  gestureAdding = false;
+
+  newGesture: Gesture = this.createNewGesture();
+
+  gestureTypes: string[] = [
+    'left',
+    'right',
+  ];
+
+
   constructor(private router: Router, private store: Store<any>) {
     this.gestures = store.select('gestures');
 
     this.store.dispatch({ type: LOAD_GESTURES });
+  }
+
+  createNewGesture(): Gesture {
+    return {
+      name: '',
+      description: '',
+      meta: '',
+    };
   }
 
   redirectToPipeline(id: string) {
@@ -69,6 +88,16 @@ export class DashboardComponent {
 
   redirectToGesture(id: string) {
     this.router.navigateByUrl('/platform/gesture/' + id);
+  }
+
+  toggleAddingGesture(): void {
+    this.gestureAdding = !this.gestureAdding;
+  }
+
+  addItem(): void {
+    this.store.dispatch({ type: CREATE_GESTURE, payload: this.newGesture });
+    this.newGesture = this.createNewGesture();
+    this.toggleAddingGesture();
   }
 
 }

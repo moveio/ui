@@ -1,5 +1,5 @@
 export interface Gesture   {
-  id: string;
+  id?: string;
   meta?: string;
   name?: string;
   description?: string;

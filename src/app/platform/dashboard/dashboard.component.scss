@@ -6,42 +6,47 @@
   .list-container {
     width: 500px;
 
-    .list-item {
-      height: 60px;
-      width: 100%;
-      padding: 10px;
-      cursor: pointer;
+    .list-content {
+      max-height: 400px;
+      overflow-x: auto;
 
-      &:hover {
-        .arrow-right {
-          opacity: 1;
+      .list-item {
+        height: 60px;
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+          .arrow-right {
+            opacity: 1;
+          }
         }
-      }
 
-      &:not(:last-child) {
-        border-bottom: 1px solid gray;
-      }
+        &:not(:last-child) {
+          border-bottom: 1px solid gray;
+        }
 
-      .item-name {
-        font-size: 16px;
-        font-weight: bold;
-      }
+        .item-name {
+          font-size: 16px;
+          font-weight: bold;
+        }
 
-      .item-description {
-        font-size: 14px;
-        font-weight: 300;
-        color: gray;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        .item-description {
+          font-size: 14px;
+          font-weight: 300;
+          color: gray;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
 
-      }
+        }
 
-      .arrow-right {
-        opacity: 0;
-        font-size: 20px;
-        font-weight: bold;
-        color: gray;
+        .arrow-right {
+          opacity: 0;
+          font-size: 20px;
+          font-weight: bold;
+          color: gray;
+        }
       }
     }
   }
@@ -52,4 +57,55 @@
     padding: 24px;
   }
 
+}
+
+.add-item-container {
+  margin-top: 24px;
+  width: 100%;
+  max-height: 60px;
+  overflow: hidden;
+  transition: max-height .5s;
+
+  &.expanded {
+    max-height: 280px !important;
+  }
+
+  .add-item-button {
+    height: 60px;
+    background-color: $primary-color;
+    color: $primary-contrast-color;
+    cursor: pointer;
+    user-select: none;
+
+    &:active {
+      background-color: darken($primary-color, 15%);
+    }
+  }
+
+  .add-item-content {
+
+    input {
+      font-size: 18px;
+      padding-left: 10px;
+      height: 30px;
+      margin-top: 16px;
+    }
+
+    select {
+      font-size: 18px;
+      height: 30px;
+      margin-top: 16px;
+    }
+
+    .add-item {
+      width: 100%;
+      height: 40px;
+      font-size: 18px;
+      border: 2px solid $primary-color;
+      cursor: pointer;
+      user-select: none;
+      color: $primary-color;
+      margin-top: 20px;
+    }
+  }
 }

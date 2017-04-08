@@ -3,29 +3,48 @@
     <div class="title">
       Pipelines
     </div>
-    <div class="list-item" *ngFor="let pipeline of pipelines" fxLayoutAlign="space-between"
-         (click)="redirectToPipeline(pipeline.id)">
-      <div>
-        <div class="item-name">{{pipeline.name}}</div>
-        <div class="item-description">{{pipeline.description}}</div>
-      </div>
-      <div fxLayoutAlign="center center" class="arrow-right">
-        <span>></span>
+    <div class="list-content">
+      <div class="list-item" *ngFor="let pipeline of pipelines" fxLayoutAlign="space-between"
+           (click)="redirectToPipeline(pipeline.id)">
+        <div>
+          <div class="item-name">{{pipeline.name}}</div>
+          <div class="item-description">{{pipeline.description}}</div>
+        </div>
+        <div fxLayoutAlign="center center" class="arrow-right">
+          <span>></span>
+        </div>
       </div>
     </div>
   </div>
+
   <div class="list-container">
     <div class="title">
       Gestures
     </div>
-    <div class="list-item" *ngFor="let gesture of gestures | async" fxLayoutAlign="space-between"
-         (click)="redirectToGesture (gesture.id)">
-      <div>
-        <div class="item-name">{{gesture.name}}</div>
-        <div class="item-description">{{gesture.description}}</div>
+    <div class="list-content">
+      <div class="list-item" *ngFor="let gesture of gestures | async" fxLayoutAlign="space-between"
+           (click)="redirectToGesture (gesture.id)">
+        <div>
+          <div class="item-name">{{gesture.name}}</div>
+          <div class="item-description">{{gesture.description}}</div>
+        </div>
+        <div fxLayoutAlign="center center" class="arrow-right">
+          <span>></span>
+        </div>
       </div>
-      <div fxLayoutAlign="center center" class="arrow-right">
-        <span>></span>
+    </div>
+    <div class="add-item-container" [ngClass]="{'expanded': gestureAdding}">
+      <div class="add-item-button" fxLayoutAlign="center center" (click)="toggleAddingGesture()">
+        <span>{{gestureAdding? 'CANCEL': '+ ADD GESTURE'}}</span>
+      </div>
+      <div class="add-item-content" fxLayout="column">
+        <input type="text" placeholder="Gesture name" [(ngModel)]="newGesture.name">
+        <input type="text" placeholder="Gesture description" [(ngModel)]="newGesture.description">
+        <select [(ngModel)]="newGesture.meta">
+          <option value="" disabled selected>Select your option</option>
+          <option *ngFor="let option of gestureTypes">{{option}}</option>
+        </select>
+        <div class="add-item" (click)="addItem()" fxLayoutAlign="center center"><span>ADD</span></div>
       </div>
     </div>
   </div>

@@ -10,6 +10,12 @@
     </div>
   </div>
 
+  <div class="actions-toolbar" *ngIf="hooks" fxLayout="row">
+    <div *ngFor="let hook of hooks" (click)="startAdding(hook, 'hook')" class="hook" fxLayoutAlign="center center">
+      <span>{{hook.name}}</span>
+    </div>
+  </div>
+
   <div class="delete-button" (click)="toggleRemoving()" fxLayoutAlign="center center">
     <span>
       {{mode === 'REMOVE' ? 'CANCEL REMOVING': 'REMOVE ITEMS'}}
